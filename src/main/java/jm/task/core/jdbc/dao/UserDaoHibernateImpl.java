@@ -4,10 +4,6 @@ package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
@@ -19,14 +15,11 @@ public class UserDaoHibernateImpl implements UserDao {
     public void createUsersTable() {
         Session session = Util.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-
         String sql = "CREATE TABLE IF NOT EXISTS users " +
                 "(id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
                 "name VARCHAR(50) NOT NULL, lastName VARCHAR(50) NOT NULL, " +
                 "age TINYINT NOT NULL)";
-
         session.createSQLQuery(sql).executeUpdate();
-
         session.getTransaction().commit();
     }
 
@@ -34,13 +27,9 @@ public class UserDaoHibernateImpl implements UserDao {
     public void dropUsersTable() {
         Session session = Util.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-
         String sql = "DROP TABLE IF EXISTS users";
-
         session.createSQLQuery(sql).executeUpdate();
-
         session.getTransaction().commit();
-
     }
 
     @Override
@@ -64,7 +53,6 @@ public class UserDaoHibernateImpl implements UserDao {
         User user = session.get(User.class, id);
         session.delete(user);
         session.getTransaction().commit();
-
     }
 
     @Override
